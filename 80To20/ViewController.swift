@@ -64,7 +64,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
         notificationContent.body = "\(batteryValue)% ";
         notificationContent.badge = NSNumber(value:0);
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false);
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false); //Current Notification Trigger. 
         let request = UNNotificationRequest(identifier: "testNotification", content: notificationContent, trigger: trigger);
         
         
