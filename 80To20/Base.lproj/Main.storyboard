@@ -10,6 +10,33 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
+        <scene sceneID="ckW-Tu-HOJ">
+            <objects>
+                <viewController id="yQ9-cF-uKW" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j8r-r2-ctY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1JL-j5-cE0">
+                                <rect key="frame" x="33" y="44" width="47" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="&lt; Back"/>
+                                <connections>
+                                    <segue destination="jTU-nM-bXd" kind="unwind" unwindAction="unwind:" id="QST-gF-15n"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9Ag-FX-5AC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="yJh-wf-VaP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4c5-Cq-GUg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="jTU-nM-bXd" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="893" y="94"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="_0To20" customModuleProvider="target" sceneMemberID="viewController">
@@ -47,11 +74,15 @@
                                 <state key="normal">
                                     <imageReference key="image" image="gearshape" catalog="system" symbolScale="large"/>
                                 </state>
+                                <connections>
+                                    <segue destination="yQ9-cF-uKW" kind="show" id="Jyk-mA-V0o"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Ed3-v3-b8g"/>
                     <connections>
                         <outlet property="batteryLabel" destination="evj-ec-Jh9" id="ImU-wK-g84"/>
                         <outlet property="messageLabel" destination="NIG-0d-EFw" id="fLI-1m-vKo"/>
