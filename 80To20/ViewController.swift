@@ -8,12 +8,11 @@
  
  TODO
  --------
- -Change the bottom text sizing and formatting to allow it to be seen
+ -Change the bottom text sizing and formatting to allow it to be seen -FIXED
  -Add an icon to explain the limitations of the app with background updating
  -Add settings tab that allows the user to choose time intervals on notifications.
-    -Time in hours to be notified per day. 
+    -Time in hours to be notified per day.
  */
- 
 
 import UIKit
 
@@ -47,6 +46,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
     //On battery level change
     @objc func batteryLevelDidChange(notification: NSNotification){
         checkBattery(); //Update the label
+        
     }
     //Check the current charge of the battery level
     func checkBattery(){
@@ -99,7 +99,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
         //Changes message depending on battery level percentage.
         if(currentLevel == 80)
         {
-            messageLabel.text = "Perfectly charged. Good job!";
+            messageLabel.text = """
+            Perfectly charged.
+            Good job!
+            """;
         }
         else if(currentLevel >= 50 && currentLevel < 80)
         {
@@ -112,7 +115,11 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
             
         }
         else{
-            messageLabel.text = "Mission Critical. Please plug in.";
+            messageLabel.text =
+            """
+            Mission Critical.
+            Please plug in.";
+            """
         }
         
        
