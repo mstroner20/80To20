@@ -4,6 +4,16 @@
 //
 //  Created by Mike Stroner on 7/19/20.
 //
+/*
+ 
+ TODO
+ --------
+ -Change the bottom text sizing and formatting to allow it to be seen
+ -Add an icon to explain the limitations of the app with background updating
+ -Add settings tab that allows the user to choose time intervals on notifications.
+    -Time in hours to be notified per day. 
+ */
+ 
 
 import UIKit
 
@@ -11,49 +21,44 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
 
     @IBOutlet weak var batteryLabel: UILabel?;
     @IBOutlet var messageLabel: UILabel!;
-    var batteryValue: Int = 0;
     
     private var observer : NSObjectProtocol?;
-    
+    var batteryValue: Int = 0;
+
     let userNotificationCenter = UNUserNotificationCenter.current();
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIDevice.current.isBatteryMonitoringEnabled = true;
-        // Do any additional setup after loading the view.
+        UIDevice.current.isBatteryMonitoringEnabled = true; //Enable battery monitoring every load.
         self.userNotificationCenter.delegate = self;
         
-        checkBattery(batteryLevel: batteryValue);
-        changeText();
-        displayMessage(currentLevel: batteryValue);
-        requestNotificationAuth();
-        sendNotification();
+        checkBattery(); //Checks the battery level
+        displayMessage(currentLevel: batteryValue); //Displays the bottom text to let the user known the state of their battery charge.
+        requestNotificationAuth(); //Request the first notification auth
+        sendNotification();        //Sends the notifications
 
-        observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main){
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main){   //Creates an observer
             [unowned self] notification in
-            checkBattery(batteryLevel: batteryValue);
+            checkBattery();
         }
      
-        NotificationCenter.default.addObserver(self, selector: #selector(batteryLevelDidChange(notification:)), name: UIDevice.batteryLevelDidChangeNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(batteryLevelDidChange(notification:)), name: UIDevice.batteryLevelDidChangeNotification, object: nil); //Allows for real-time updating of the label
     }
-    
+    //On battery level change
     @objc func batteryLevelDidChange(notification: NSNotification){
-        checkBattery(batteryLevel: batteryValue);
+        checkBattery(); //Update the label
     }
-    
-    func checkBattery(batteryLevel : Int){
+    //Check the current charge of the battery level
+    func checkBattery(){
         
-        batteryValue = (Int)(UIDevice.current.batteryLevel * 100);
-        batteryLabel!.text = "\(batteryValue)%";
+        batteryValue = (Int)(UIDevice.current.batteryLevel * 100); //Get the float value from the device then convert to Int value without leading 0s
+        batteryLabel!.text = "\(batteryValue)%";    //Add battery level to label
+        
+        batteryLabel!.center = self.view.center;    //Centers the label on the screen
+        batteryLabel!.textAlignment = .center;      //Centers the label within the label bounds
+        batteryLabel!.font = UIFont(name:"Arial", size: 45);    //Font size and type
     }
-    
-    
-    func changeText(){
-        batteryLabel!.center = self.view.center;
-        batteryLabel!.textAlignment = .center;
-        batteryLabel!.font = UIFont(name:"Arial", size: 45);
-    }
-    
+    //Requests the first notification authorization on first launch
     func requestNotificationAuth(){
         let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound);
         self.userNotificationCenter.requestAuthorization(options: authOptions) {(success, error) in
@@ -64,16 +69,16 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
         }
     }
     
-    
+    //Sends notifications while app is in background based on time. -NEEDS WORK
     func sendNotification()
     {
         let notificationContent = UNMutableNotificationContent();
-        notificationContent.title = "Battery Level";
-        notificationContent.body = "\(batteryValue)% ";
-        notificationContent.badge = NSNumber(value:0);
+        notificationContent.title = "Battery Level";    //Title of the notification
+        notificationContent.body = "\(batteryValue)% "; //Text of the notification
+        notificationContent.badge = NSNumber(value:0);  //Badge number when notification is triggered. Badge == red number on app icon after notif is triggered
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false); //Current Notification Trigger.
-        let request = UNNotificationRequest(identifier: "testNotification", content: notificationContent, trigger: trigger);
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false);  //Current Notification Trigger. Repeats every minute but does not repeat
+        let request = UNNotificationRequest(identifier: "testNotification", content: notificationContent, trigger: trigger);    //Actual sending of the notification.
         
         
         userNotificationCenter.add(request) {(error) in
@@ -86,10 +91,12 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
     
     func displayMessage(currentLevel:Int)
     {
+        //Align the bottom text -NEEDS WORK
         messageLabel.textAlignment = .center;
         messageLabel.center.x = self.view.center.x;
         messageLabel!.font = UIFont(name:"Arial", size: 23.5);
         
+        //Changes message depending on battery level percentage.
         if(currentLevel == 80)
         {
             messageLabel.text = "Perfectly charged. Good job!";
