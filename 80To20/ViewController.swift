@@ -127,6 +127,16 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
     
     
     
+    @IBAction func infoButtonPress(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "App limitations", message: "Apple does not allow constant battery monitoring when this app is not in the foreground or closed. To get updated stats please open the settings in this app and set intervals you would like to be notified. ", preferredStyle: UIAlertController.Style.alert);
+                
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil));
+                
+        self.present(alert, animated: true, completion: nil);
+        
+        
+    }
     
     
    
