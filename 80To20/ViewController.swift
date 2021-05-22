@@ -19,6 +19,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIDevice.current.isBatteryMonitoringEnabled = true;
         // Do any additional setup after loading the view.
         self.userNotificationCenter.delegate = self;
         
@@ -32,13 +33,20 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
             [unowned self] notification in
             checkBattery(batteryLevel: batteryValue);
         }
+     
+        NotificationCenter.default.addObserver(self, selector: #selector(batteryLevelDidChange(notification:)), name: UIDevice.batteryLevelDidChangeNotification, object: nil);
+    }
+    
+    @objc func batteryLevelDidChange(notification: NSNotification){
+        checkBattery(batteryLevel: batteryValue);
     }
     
     func checkBattery(batteryLevel : Int){
-        UIDevice.current.isBatteryMonitoringEnabled = true;
+        
         batteryValue = (Int)(UIDevice.current.batteryLevel * 100);
         batteryLabel!.text = "\(batteryValue)%";
     }
+    
     
     func changeText(){
         batteryLabel!.center = self.view.center;
@@ -64,7 +72,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
         notificationContent.body = "\(batteryValue)% ";
         notificationContent.badge = NSNumber(value:0);
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false); //Current Notification Trigger. 
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false); //Current Notification Trigger.
         let request = UNNotificationRequest(identifier: "testNotification", content: notificationContent, trigger: trigger);
         
         
@@ -102,6 +110,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
         
        
     }
+    
+    
     
     
     
