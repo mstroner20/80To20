@@ -77,7 +77,12 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
         notificationContent.body = "\(batteryValue)% "; //Text of the notification
         notificationContent.badge = NSNumber(value:0);  //Badge number when notification is triggered. Badge == red number on app icon after notif is triggered
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false);  //Current Notification Trigger. Repeats every minute but does not repeat
+        //3600 seconds == hour
+        
+        
+        
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 86400.0, repeats: true);  //Current Notification Trigger. Repeats every minute but does not repeat
         let request = UNNotificationRequest(identifier: "testNotification", content: notificationContent, trigger: trigger);    //Actual sending of the notification.
         
         
@@ -139,7 +144,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate{
     }
     
     @IBAction func unwind( _ seg: UIStoryboardSegue) {
-        
         
     }
     
