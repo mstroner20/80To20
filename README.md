@@ -1,4 +1,4 @@
-![GitHub top language](https://img.shields.io/github/languages/top/mstroner20/80to20)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-swift.svg)](https://forthebadge.com)
 # 80To20
 This is an IOS app that monitors battery status and sends push notifications to the user to let them know what percent their battery is at. 
 
